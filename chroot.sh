@@ -35,7 +35,8 @@ sudo ln -sv /proc/self/fd/0 $chr/dev/stdin
 sudo ln -sv /proc/self/fd/1 $chr/dev/stdout
 
 #Specify the commands you want to give the users.
-#Add to the list within the { }
+#Add to the list within the /bin/{ }
+#I think the /bin/bash is essential. I wouldn't take it out just in case, unless you know better. 
 sudo cp -v /bin/{bash,ls,cat,} $chr/bin
 dlist="$(ldd /bin/{bash,ls,cat} | egrep -o '/lib.*\.[0-9]')"
 for i in $dlist; do sudo cp -v --parents "$i" "${chr}"; done
@@ -51,8 +52,10 @@ echo "Subsystem   	sftp	internal-sftp"
 echo ""
 echo 'At the very bottom add:'
 echo ""
-echo 'Match group jail'
-echo '    	ChrootDirectory /bruh/lol/'
+#specify whatever you set the jail group to. Example: jail
+echo 'Match group (whatever $group is)'
+#Don't put $chr. Just type out the chroot directory you specified. Example: /bruh/lol
+echo '    	ChrootDirectory (whatever $chr is)'
 echo '    	AllowTcpForwarding no'
 echo ""
 echo "Don't forget to restart the service by doing 'sudo systemctl restart ssh'"
