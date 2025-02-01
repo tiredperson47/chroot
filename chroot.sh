@@ -38,7 +38,7 @@ sudo ln -sv /proc/self/fd/1 $chr/dev/stdout
 #Add to the list within the /bin/{ }
 #I think the /bin/bash is essential. I wouldn't take it out just in case, unless you know better. 
 sudo cp -v /bin/{bash,ls,cat,} $chr/bin
-dlist="$(ldd /bin/{bash,ls,cat} | egrep -o '/lib.*\.[0-9]')"
+dlist="$(ldd /bin/{bash,ls,cat,whoami,id,hostname,echo} | egrep -o '/lib.*\.[0-9]')"
 for i in $dlist; do sudo cp -v --parents "$i" "${chr}"; done
 
 echo ""
